@@ -13,7 +13,7 @@ const ColorPicker = () => {
         color={snap.color}
         disableAlpha
         onChange={(color) => (state.color = color.hex)}
-        // presentColors={[//add colors if you want]}
+        // presentColors={[add colors if you want]}
       />
     </div>
   );

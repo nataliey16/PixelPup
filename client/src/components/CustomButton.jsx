@@ -2,6 +2,8 @@ import React from "react";
 import { useSnapshot } from "valtio";
 
 import state from "../store";
+//function to automatically customize contrast of button against shirt color
+import { getContrastingColor } from "../config/helpers";
 
 const CustomButton = ({ title, type, customStyles, handleClick }) => {
   const snap = useSnapshot(state);
@@ -9,7 +11,13 @@ const CustomButton = ({ title, type, customStyles, handleClick }) => {
     if (type === "filled") {
       return {
         backgroundColor: snap.color, // from Valtio
-        color: "#fff",
+        color: getContrastingColor(snap.color),
+      };
+    } else if (type === "outline") {
+      return {
+        borderWidth: "1px",
+        borderColor: snap.color,
+        color: snap.color,
       };
     }
   };

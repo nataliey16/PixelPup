@@ -40,13 +40,58 @@ const Customizer = () => {
       case "colorpicker":
         return <ColorPicker />;
       case "filepicker":
-        return <FilePicker />;
+        return <FilePicker file={file} setFile={setFile} readFile={readFile} />;
       case "aipicker":
         return <AIPicker />;
 
       default:
         return null;
     }
+  };
+
+  //type - fullTexture or logo
+  const handleDecals = (type, result) => {
+    const decalType = DecalTypes[type];
+
+    //updates the store state
+    state[decalType.stateProperty] = result;
+
+    if (!activeFilterTab[(decal, filterTab)]) {
+      handleActiveFilterTab(decalType.filterTab);
+    }
+  };
+
+  const handleActiveFilterTab = (tabName) => {
+    switch (tabName) {
+      case "logoShirt":
+        state.isLogoTexture = !activeFilterTab[tabName];
+        break;
+
+      case "stylishShirt":
+        state.isFullTexture = !activeFilterTab[tabName];
+
+      default:
+        state.isLogoTexture = true;
+        state.isFullTexture = false;
+    }
+
+    //once state is set, set active filter tab to update UI
+
+    setActiveFilterTab((prevState) => {
+      return {
+        ...prevState,
+        [tabName]: !prevState[tabName],
+      };
+    });
+  };
+
+  //Takes type of file, pass it to this function to get file data
+
+  const readFile = (type) => {
+    reader(file).then((result) => {
+      handleDecals(type, result);
+      setActiveEditorTab("");
+    });
   };
 
   return (
@@ -91,8 +136,10 @@ const Customizer = () => {
                 key={tab.name}
                 tab={tab}
                 isFilterTab
-                isActiveTab=""
-                handleClick={() => {}}
+                isActiveTab={activeFilterTab[tab.name]}
+                handleClick={() => {
+                  handleActiveFilterTab(tab.name);
+                }}
               />
             ))}
           </motion.div>
