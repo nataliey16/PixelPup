@@ -9,6 +9,9 @@ import state from "../store";
 const Shift = () => {
   const snap = useSnapshot(state);
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
+  //const { nodes, materials } = useGLTF("/shiba.glb");
+
+  console.log(nodes);
 
   //From store/index.js
   const logoTexture = useTexture(snap.logoDecal);
@@ -18,12 +21,21 @@ const Shift = () => {
     easing.dampC(materials.lambert1.color, snap.color, 0.25, delta)
   );
 
+  // useFrame((state, delta) =>
+  //   easing.dampC(materials.default.color, snap.color, 0.25, delta)
+  // );
+
   // create a string of state to keeps track of state changes and render the change
   const stateString = JSON.stringify(snap);
 
   return (
     <group key={stateString}>
       <mesh
+        //castShadow
+        // geometry={nodes.Box002_default_0.geometry}
+        // material={materials.default}
+        // material-roughness={1}
+        // dispose={null}
         castShadow
         geometry={nodes.T_Shirt_male.geometry}
         material={materials.lambert1}

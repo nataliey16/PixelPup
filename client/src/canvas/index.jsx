@@ -4,6 +4,7 @@ import { Environment, Center } from "@react-three/drei";
 import Shirt from "./Shirt";
 import Backdrop from "./Backdrop";
 import CameraRig from "./CameraRig";
+import CameraRig1 from "./CameraRig1";
 
 const CanvasModel = () => {
   return (
@@ -15,6 +16,7 @@ const CanvasModel = () => {
     >
       <ambientLight intensity={0.5} />
       <Environment preset="city" />
+      {/* city adds effect on entire screen */}
       <CameraRig>
         <Backdrop />
         <Center>

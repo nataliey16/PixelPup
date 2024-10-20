@@ -64,6 +64,26 @@ const Customizer = () => {
 
     try {
       //call backend to generate an ai image
+
+      setGeneratingImg(true);
+      const response = await fetch("http://localhost:8080/api/v1/dalle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Backend response:", data); // Log the response
+
+      if (!data.photo) {
+        throw new Error("Photo data is missing in the response");
+      }
+      //update the logo or full shirt
+      handleDecals(type, `data:image/png;base64,${data.photo}`);
     } catch (error) {
       alert(error);
     } finally {
@@ -76,10 +96,10 @@ const Customizer = () => {
   const handleDecals = (type, result) => {
     const decalType = DecalTypes[type];
 
-    //updates the store state
+    //updates the store state in index.js
     state[decalType.stateProperty] = result;
 
-    if (!activeFilterTab[(decal, filterTab)]) {
+    if (!activeFilterTab[decalType.filterTab]) {
       handleActiveFilterTab(decalType.filterTab);
     }
   };
@@ -92,10 +112,11 @@ const Customizer = () => {
 
       case "stylishShirt":
         state.isFullTexture = !activeFilterTab[tabName];
-
+        break;
       default:
         state.isLogoTexture = true;
         state.isFullTexture = false;
+        break;
     }
 
     //once state is set, set active filter tab to update UI
@@ -119,7 +140,7 @@ const Customizer = () => {
 
   return (
     <AnimatePresence>
-      {!snap.intro && (
+      {!snap.intro && ( // If not in the home, show customizer page
         <>
           <motion.div
             key="custom"
