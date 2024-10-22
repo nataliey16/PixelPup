@@ -32,6 +32,12 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
               handleClick={() => handleSubmit("full")}
               customStyles="text-xs"
             />
+            <CustomButton
+              type="filled"
+              title="Save to show case"
+              handleClick={() => handleSubmit("full")}
+              customStyles="text-xs"
+            />
           </>
         )}
       </div>

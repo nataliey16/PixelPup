@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <AnimatePresence>
       {/* If on the home page, show animation */}
-      {snap.intro && (
+      {snap.intro && !snap.customize && !snap.showcase && (
         <motion.section className="home" {...slideAnimation("left")}>
           <motion.header {...slideAnimation("down")}>
             <img
@@ -29,7 +29,7 @@ const Home = () => {
           <motion.div className="home-content" {...headContainerAnimation}>
             <motion.div {...headTextAnimation}>
               <h1 className="head-text">
-                LET'S <br className="xl:block hidden" /> DO IT.
+                PIXEL <br className="xl:block hidden" /> PUP
               </h1>
             </motion.div>
             <motion.div
@@ -37,14 +37,18 @@ const Home = () => {
               className="flex flex-col gap-5"
             >
               <p className="max-w-md font-normal text-gray-600 text-base">
-                Create your unique and exclusive hirt with our brand-new 3D
+                Create your unique and exclusive shirt with our brand-new 3D
                 customization tool. <strong>Unleash your imagination</strong>{" "}
                 and define your own style.
               </p>
               <CustomButton
                 type="filled"
                 title="Customize It"
-                handleClick={() => (state.intro = false)}
+                handleClick={() => {
+                  state.intro = false;
+                  state.customize = true;
+                  state.showcase = false;
+                }}
                 customStyles="w-fit px-4 py-2.5 font-bold text-sm"
               />
             </motion.div>

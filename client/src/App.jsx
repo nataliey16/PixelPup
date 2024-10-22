@@ -1,6 +1,8 @@
 import Canvas from "./canvas";
 import Customizer from "./pages/Customizer";
+
 import Home from "./pages/Home";
+import ShowCase from "./pages/ShowCase";
 
 function App() {
   return (
@@ -8,6 +10,7 @@ function App() {
       <Home />
       <Canvas />
       <Customizer />
+      <ShowCase />
     </main>
   );
 }
